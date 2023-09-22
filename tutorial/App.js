@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import Header from "./src/components/Header";
 import Profile from "./src/components/Profile";
 import FriendList from "./src/components/FriendList";
@@ -8,6 +8,8 @@ import Tabbar from "./src/components/Tabbar";
 import { friendProfiles } from "./src/data";
 import { myProfile } from "./src/data";
 import Margin from "./src/components/Margin";
+import SafeAreaView from "react-native-safe-area-view";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -37,34 +39,45 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-      <FlatList
-        data={friendProfiles}
-        renderItem={({ item, index }) => {
-          return (
-            isListVisible && (
-              <Profile
-                key={index}
-                desc={item.introduction}
-                name={item.name}
-                image_src={item.uri}
-                image_size={40}
-              ></Profile>
-            )
-          );
+    <SafeAreaProvider style={{}}>
+      <SafeAreaView
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          // backgroundColor: "green",
         }}
-        ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
-        ListHeaderComponent={ListHeaderComponent}
-        ListFooterComponent={() => <View style={{ height: 10 }}></View>}
-        stickyHeaderIndices={[0]}
-        style={{ paddingHorizontal: 20, flex: 1 }}
-      ></FlatList>
-      <Tabbar
-        style={{ height: 10 }}
-        selectedIndex={selectedIndex}
-        setSelectedIndex={setSelectedIndex}
-      ></Tabbar>
-    </SafeAreaView>
+      >
+        <View style={{ flex: 1 }}>
+          <FlatList
+            data={friendProfiles}
+            renderItem={({ item, index }) => {
+              return (
+                isListVisible && (
+                  <Profile
+                    key={index}
+                    desc={item.introduction}
+                    name={item.name}
+                    image_src={item.uri}
+                    image_size={40}
+                  ></Profile>
+                )
+              );
+            }}
+            ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
+            ListHeaderComponent={ListHeaderComponent}
+            ListFooterComponent={() => <View style={{ height: 10 }}></View>}
+            stickyHeaderIndices={[0]}
+            style={{ paddingHorizontal: 20, flex: 1 }}
+          ></FlatList>
+        </View>
+        <Tabbar
+          style={{ height: 10 }}
+          selectedIndex={selectedIndex}
+          setSelectedIndex={setSelectedIndex}
+        ></Tabbar>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
