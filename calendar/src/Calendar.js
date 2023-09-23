@@ -68,9 +68,7 @@ const Calendar = ({
   onPressLeftButton,
   onPressRightButton,
 }) => {
-  const RenderCalendarItem = ({ item: utcItem }) => {
-    const item = dayjs(utcItem).subtract(9, "hour");
-    // 그러니까 기준은 UTC로 하는데, get("date")하면 그걸 한국시간으로 바꾸어준다.
+  const RenderCalendarItem = ({ item }) => {
     const dateText = dayjs(item).get("date");
     return (
       <Column

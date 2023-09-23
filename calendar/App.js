@@ -20,6 +20,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function App() {
   const now = dayjs();
+
   const {
     currentDay,
     isDatePickerVisible,
